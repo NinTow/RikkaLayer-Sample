@@ -4,3 +4,20 @@
 私への連絡　：　https://twitter.com/KyoumeiProject
 
 ## 使い方
+RikkaLayer.pyの中のRikkaLayerクラスを、Linear層などと同じように使います。
+定義時には、入力次元数を渡せばよいです。
+forward()実行時のデータの入力形式は、3次元固定で、[バッチ, 時間軸,　入力次元]となっています。
+forward()だけではなく、step()も用意されています。
+step()の入力形式は、[バッチ,入力次元]となっています。
+出力は入力と同じ形です。
+例
+batch = 10
+SequenseLen = 15
+dim = 128
+model = RikkaLayer(dim)
+#一括入力
+data = torch.ones((batch, SequenseLen, dim))
+model(data)
+#一個ずつ入力
+stepData = torch.ones((batch, dim))
+model.step(stepData)
