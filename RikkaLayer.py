@@ -32,9 +32,8 @@ class RikkaLayer(torch.nn.Module):
             if (self.x != None):
                 xx = torch.nn.functional.normalize(self.x)
                 uu = torch.nn.functional.normalize(u)
-                #self.x = self.x.detach()
                 self.x = self.A(xx) + self.B(uu) + self.x
-                y =  self.C(xx) + self.D(uu)
+                y =  self.C(xx) + self.D(uu) + self.x
                 out.append(y.view(-1, 1, self.dim))
             else:
                 uu = torch.nn.functional.normalize(u)
@@ -47,13 +46,10 @@ class RikkaLayer(torch.nn.Module):
         if (self.x != None):
             xx = torch.nn.functional.normalize(self.x)
             uu = torch.nn.functional.normalize(u)
-            #self.x = self.x.detach()
             self.x = self.A(xx) + self.B(uu) + self.x
-            y =  self.C(xx) + self.D(uu)
-            #out.append(y.view(-1, 1, self.dim))
+            y =  self.C(xx) + self.D(uu) + self.x
         else:
             uu = torch.nn.functional.normalize(u)
             self.x = self.B(uu)
             y = self.D(uu)
-            #out.append(y.view(-1, 1, self.dim))
         return y + u
